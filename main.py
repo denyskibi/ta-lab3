@@ -49,6 +49,7 @@ def main():
         # Load list from file
         loaded_num_list = file_utils.load_list_from_txt_file(file_path="files/input_10000_numbers.txt")
 
+        # Call the function with a necessary task (to avoid depth recursion error)
         task2(loaded_num_list)
     except KeyboardInterrupt:
         print("[ERROR] Failed: script interrupted by user (CTRL + C)")
