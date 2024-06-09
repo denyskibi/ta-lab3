@@ -27,6 +27,19 @@ class QuickSort:
             self.sort_with_swapping_elements(array, lo, p - 1)  # recursive sorting the left part of the array
             self.sort_with_swapping_elements(array, p + 1, hi)  # recursive sorting the right part of the array
 
+    def sort_with_median(self, array: List[int], lo: int, hi: int) -> None:
+        if lo < hi:
+            # Step #1: Choosing the reference element as the median of three: the first, the last and the middle
+            pivot_index = self._get_median_of_three_elements(array, lo, hi)
+            array[pivot_index], array[hi] = array[hi], array[pivot_index]
+
+            # Step #2: Performing the separation of array
+            p = self._split_array_into_parts(array, lo, hi)
+
+            # Step #3: Recursive sorting array parts
+            self.sort_with_median(array, lo, p - 1)
+            self.sort_with_median(array, p + 1, hi)
+
     def get_total_comparisons(self) -> int:
         return self._total_comparisons
 
@@ -48,3 +61,19 @@ class QuickSort:
         array[i + 1], array[hi] = array[hi], array[i + 1]
 
         return i + 1
+
+    @staticmethod
+    def _get_median_of_three_elements(array: List[int], lo: int, hi: int) -> int:
+        median = (lo + hi) // 2
+
+        if array[hi] < array[lo]:
+            array[lo], array[hi] = array[hi], array[lo]
+
+        if array[median] < array[lo]:
+            array[median], array[lo] = array[lo], array[median]
+
+        if array[hi] < array[median]:
+            array[hi], array[median] = array[median], array[hi]
+
+        return median
+
